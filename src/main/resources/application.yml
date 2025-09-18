@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: preStudy
+
+  profiles:
+    default: local
+
+  config:
+    import:
+      - database.yml
+
+  datasource:
+    driver-class-name: ${database.driver}
+    url: ${database.url}
+    username: ${database.username}
+    password: ${database.password}
+
+logging:
+  level:
+    root: info
+  #pattern:
+    #console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %clr(${PID:- }){magenta} -- %([%12.12t]) %cyan(%-50.50(%F:%L)) | %clr([%X{txId:-UUID}]) %msg%n"
