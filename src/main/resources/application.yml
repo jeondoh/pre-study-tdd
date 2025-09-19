@@ -3,7 +3,7 @@ spring:
     name: preStudy
 
   profiles:
-    default: local
+    default: develop
 
   config:
     import:
@@ -18,5 +18,3 @@ spring:
 logging:
   level:
     root: info
-  #pattern:
-    #console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %clr(${PID:- }){magenta} -- %([%12.12t]) %cyan(%-50.50(%F:%L)) | %clr([%X{txId:-UUID}]) %msg%n"
