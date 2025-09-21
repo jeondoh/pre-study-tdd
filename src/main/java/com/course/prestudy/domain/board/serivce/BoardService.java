@@ -3,8 +3,10 @@ package com.course.prestudy.domain.board.serivce;
 import com.course.prestudy.core.dto.PagingResponse;
 import com.course.prestudy.domain.board.dto.*;
 import com.course.prestudy.domain.board.entity.Board;
+import com.course.prestudy.domain.board.exception.BoardException;
 import com.course.prestudy.domain.board.repository.BoardRepository;
 import com.course.prestudy.domain.user.entity.User;
+import com.course.prestudy.domain.user.exception.UserException;
 import com.course.prestudy.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +35,7 @@ public class BoardService {
     // 선택 게시글 조회
     public BoardViewResponse getBoard(long id) {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다. ID: " + id));
+                .orElseThrow(() -> new BoardException.NotFoundException("id: " + id));
 
         return BoardViewResponse.from(board);
     }
@@ -42,7 +44,7 @@ public class BoardService {
     @Transactional
     public BoardCreateResponse createBoard(BoardCreateRequest request) {
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다. ID: " + request.userId()));
+                .orElseThrow(() -> new UserException.NotFoundException("id: " + request.userId()));
 
         Board board = Board.builder()
                 .user(user)
@@ -59,10 +61,10 @@ public class BoardService {
     @Transactional
     public BoardViewResponse updateBoard(long id, BoardUpdateRequest request) {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다. ID: " + id));
+                .orElseThrow(() -> new BoardException.NotFoundException("id: " + id));
 
         if (!board.isEqualPassword(request.password())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new BoardException.InCorrectPassword();
         }
 
         board.updateBoard(request.title(), request.content());
@@ -73,10 +75,10 @@ public class BoardService {
     @Transactional
     public void deleteBoard(long id, BoardDeleteRequest request) {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다. ID: " + id));
+                .orElseThrow(() -> new BoardException.NotFoundException("id: " + id));
 
         if (!board.isEqualPassword(request.password())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new BoardException.InCorrectPassword();
         }
 
         boardRepository.delete(board);
