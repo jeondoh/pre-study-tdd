@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -38,5 +39,9 @@ public class ResponseApi<T> {
 
     public static <T> ResponseApi<T> ok(T data) {
         return new ResponseApi<>(HttpStatus.OK.value(), data);
+    }
+
+    public static <T> ResponseApi<T> nok(HttpStatusCode statusCode, String errorCode, String message) {
+        return new ResponseApi<>(statusCode.value(), errorCode, message, null);
     }
 }
