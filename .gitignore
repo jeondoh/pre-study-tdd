@@ -309,3 +309,4 @@ gradle-app.setting
 .idea
 database.yml
 *.iml
+errors.properties
