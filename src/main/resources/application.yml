@@ -8,6 +8,7 @@ spring:
   config:
     import:
       - database.yml
+      - common.yml
 
   datasource:
     driver-class-name: ${database.driver}
