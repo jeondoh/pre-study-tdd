@@ -1,4 +1,4 @@
-package com.course.prestudy.domain.board.serivce;
+package com.course.prestudy.domain.board.service;
 
 import com.course.prestudy.core.dto.PagingResponse;
 import com.course.prestudy.domain.board.dto.*;

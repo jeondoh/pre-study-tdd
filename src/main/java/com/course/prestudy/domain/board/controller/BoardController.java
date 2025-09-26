@@ -3,7 +3,7 @@ package com.course.prestudy.domain.board.controller;
 import com.course.prestudy.core.config.ResponseApi;
 import com.course.prestudy.core.dto.PagingResponse;
 import com.course.prestudy.domain.board.dto.*;
-import com.course.prestudy.domain.board.serivce.BoardService;
+import com.course.prestudy.domain.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
