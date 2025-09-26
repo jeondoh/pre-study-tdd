@@ -2,6 +2,7 @@ package com.course.prestudy.core.exception;
 
 import com.course.prestudy.core.config.ResponseApi;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Locale;
 
+@Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class BaseExceptionHandler {
@@ -38,8 +40,7 @@ public class BaseExceptionHandler {
         String errorCode = messageSource.getMessage("server.error.code", null, Locale.getDefault());
         String errorMessage = messageSource.getMessage("server.error.message", null, Locale.getDefault());
 
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+        log.error(ex.getMessage());
 
         return ResponseApi.nok(HttpStatus.INTERNAL_SERVER_ERROR, errorCode, errorMessage);
     }
