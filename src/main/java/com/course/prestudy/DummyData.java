@@ -27,21 +27,21 @@ public class DummyData implements CommandLineRunner {
                 User user = User.makeDummyUser("user" + i, "pwd" + i);
                 userRepository.save(user);
             });
+
+            List<User> users = userRepository.findAll();
+            IntStream.rangeClosed(1, 105).forEach(i -> {
+                int userIndex = (i - 1) % users.size();
+                User user = users.get(userIndex);
+
+                Board board = Board.makeDummyBoard(
+                        user,
+                        "제목" + i,
+                        i + "번째 게시글 내용",
+                        "pwd" + i
+                );
+
+                boardRepository.save(board);
+            });
         }
-
-        List<User> users = userRepository.findAll();
-        IntStream.rangeClosed(1, 105).forEach(i -> {
-            int userIndex = (i - 1) % users.size();
-            User user = users.get(userIndex);
-
-            Board board = Board.makeDummyBoard(
-                    user,
-                    "제목" + i,
-                    i + "번째 게시글 내용",
-                    "pwd" + i
-            );
-
-            boardRepository.save(board);
-        });
     }
 }
